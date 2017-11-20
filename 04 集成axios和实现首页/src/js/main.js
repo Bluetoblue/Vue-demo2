@@ -5,12 +5,15 @@ import 'mint-ui/lib/style.css';
 import Common from "../component/common";//导入自己的组件库，会自动找到index.js
 import 'mui/dist/css/mui.css';
 import 'mui/examples/hello-mui/css/icons-extra.css';//导入拓展字体样式
+import axios from 'axios';//导入axios，但他不是vue的插件，所以它是哪里需要导入哪里，这样就很麻烦，解决的方法就是把它写入Vue的原型里面
 
 
 // 启用vue插件：
 Vue.use(MintUi);
 // 启用自己的vue组件库：
 Vue.use(Common);
+// 把axios写入Vue的原型，以后只要实例Vue就都可以用它：
+Vue.prototype.axios=axios;
 
 // 导入公共头部组件：这一步会随着编写、启用自己的Vue组件库index.js而去掉。
 // import Header from '../component/common/header.vue';
@@ -23,6 +26,7 @@ import AppComponent from '../component/App.vue';
 new Vue({
   el:'#app',
   render(createNode){
+    console.log(this.axios);
     return createNode(AppComponent);//声明成全局的,通过createNode()方法渲染根组件到index.html中去
   }
 });
