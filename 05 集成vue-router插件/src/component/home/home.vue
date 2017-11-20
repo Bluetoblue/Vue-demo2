@@ -82,7 +82,6 @@ article {
     height: @height;
     img {
         height: @height;
-        width:100%;
     }
 }
 </style>
