@@ -6,12 +6,19 @@ import Common from "../component/common";//导入自己的组件库，会自动�
 import 'mui/dist/css/mui.css';
 import 'mui/examples/hello-mui/css/icons-extra.css';//导入拓展字体样式
 import axios from 'axios';//导入axios，但他不是vue的插件，所以它是哪里需要导入哪里，这样就很麻烦，解决的方法就是把它写入Vue的原型里面
+import VueRouter from 'vue-router';//导入vue-router插件
 
 
-// 启用vue插件：
+
+
+
+// 启用vue的MinUi插件：
 Vue.use(MintUi);
 // 启用自己的vue组件库：
 Vue.use(Common);
+// 启用vue的router插件
+Vue.use(VueRouter);
+
 // 把axios写入Vue的原型，以后只要实例Vue就都可以用它：
 Vue.prototype.axios=axios;
 
@@ -19,8 +26,10 @@ Vue.prototype.axios=axios;
 // import Header from '../component/common/header.vue';
 // Vue.component('app-header',Header);//这一步是把header组件配置项定义成全局的。但是这样一来会造成main.js文件有很多这样的代码，所以这一步放到index.js文件中去，编写成一个属于自己的Vue组件库。
 
-// 导入根组件：
+// 2.1导入根组件：
 import AppComponent from '../component/App.vue';
+// 2.2导入配置：
+import routerConfig from '../router';//会自动找到router文件夹下的index.js
 
 // 渲染根组件，启动项目：
 new Vue({
@@ -28,7 +37,9 @@ new Vue({
   render(createNode){
     console.log(this.axios);
     return createNode(AppComponent);//声明成全局的,通过createNode()方法渲染根组件到index.html中去
-  }
+  },
+// 把路由配置传进来：
+  router: new VueRouter(routerConfig)
 });
 
 
